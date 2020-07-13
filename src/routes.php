@@ -15,6 +15,12 @@ return function (App $app) {
         return $container->get('renderer')->render($response, 'index.phtml', $args);
     });
 
+    $app->group('/user', function () use ($app) {
+        $app->post('/login', 'UserController:login');
+
+        $app->post('/register', 'UserController:login');
+    });
+
     $app->get('/system-info', function (Request $request, Response $response) {
         return phpinfo();
     });

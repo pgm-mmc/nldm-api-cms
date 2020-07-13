@@ -3,7 +3,22 @@
 use Slim\App;
 
 return function (App $app) {
+
     $container = $app->getContainer();
+
+    /**
+     * Controller
+     */
+
+    // UserController
+    $container['UserController'] = function ($c) use ($container) {
+        return new \App\Controller\UserController($container);
+    };
+
+     // MailController
+     $container['MailController'] = function ($c) use ($container) {
+        return new \App\Controller\MailController($container);
+    };
 
     // view renderer
     $container['renderer'] = function ($c) {
