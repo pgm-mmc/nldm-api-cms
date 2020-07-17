@@ -29,6 +29,8 @@ return function (App $app) {
         $app->post('/generate/token', 'AuthController:generateToken');
     });
 
+    $app->post('/send-mail', 'MailController:send');
+
     $app->get('/system-info', function (Request $request, Response $response) {
         return phpinfo();
     });
