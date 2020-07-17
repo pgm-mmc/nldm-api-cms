@@ -16,12 +16,18 @@ return function (App $app) {
     });
 
     $app->group('/user', function () use ($app) {
-        $app->post('/login', 'UserController:login');
-
-        $app->post('/register', 'UserController:login');
+        $app->post('/register', 'UserController:register');
     });
 
-    $app->post('/generate/token', 'AuthController:generateToken');
+    $app->group('/auth', function () use ($app) {
+        $app->post('/login', 'UserController:login');
+
+        $app->post('/generate/password', 'UserController:generatePassword');
+
+        $app->post('/verify/password', 'UserController:verifyPassword');
+
+        $app->post('/generate/token', 'AuthController:generateToken');
+    });
 
     $app->get('/system-info', function (Request $request, Response $response) {
         return phpinfo();
