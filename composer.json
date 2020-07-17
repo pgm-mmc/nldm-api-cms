@@ -15,6 +15,7 @@
         "php": ">=5.6",
         "catfan/medoo": "^1.7",
         "firebase/php-jwt": "^5.2",
+        "laminas/laminas-crypt": "^3.3",
         "monolog/monolog": "^1.17",
         "phpmailer/phpmailer": "^6.1",
         "slim/php-view": "^2.0",
