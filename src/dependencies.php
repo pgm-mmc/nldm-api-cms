@@ -10,6 +10,11 @@ return function (App $app) {
      * Controller
      */
 
+    // AuthController
+    $container['AuthController'] = function ($c) use ($container) {
+        return new \App\Controller\AuthController($container);
+    };
+
     // UserController
     $container['UserController'] = function ($c) use ($container) {
         return new \App\Controller\UserController($container);

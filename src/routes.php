@@ -21,6 +21,8 @@ return function (App $app) {
         $app->post('/register', 'UserController:login');
     });
 
+    $app->post('/generate/token', 'AuthController:generateToken');
+
     $app->get('/system-info', function (Request $request, Response $response) {
         return phpinfo();
     });
