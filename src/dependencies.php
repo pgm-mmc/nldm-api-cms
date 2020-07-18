@@ -20,6 +20,11 @@ return function (App $app) {
         return new \App\Controller\UserController($container);
     };
 
+      // SectionController
+      $container['SectionController'] = function ($c) use ($container) {
+        return new \App\Controller\SectionController($container);
+    };
+
      // MailController
      $container['MailController'] = function ($c) use ($container) {
         return new \App\Controller\MailController($container);

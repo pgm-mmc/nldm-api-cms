@@ -31,6 +31,12 @@ return function (App $app) {
 
     $app->post('/send-mail', 'MailController:send');
 
+    $app->group('/cms', function () use ($app) {
+        $app->group('/section', function () use ($app) {
+            $app->post('/create', 'SectionController:create');
+        });
+    });
+
     $app->get('/system-info', function (Request $request, Response $response) {
         return phpinfo();
     });
