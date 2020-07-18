@@ -27,12 +27,21 @@ class SectionData extends Database
 
     public function setData(): bool
     {
-        $this->db->insert('section', [
-            'section_code' => $this->sectionCode,
-            'section_desc' => $this->sectionDesc,
-            'sequence' => $this->sequence
-        ]);
+        try {
+            $this->db->pdo->beginTransaction();
 
-        return true;
+            $this->db->insert('section', [
+                'section_code' => $this->sectionCode,
+                'section_desc' => $this->sectionDesc,
+                'sequence' => $this->sequence
+            ]);
+
+            $this->db->pdo->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->db->pdo->rollback();
+        }
+
+        return false;
     }
 }

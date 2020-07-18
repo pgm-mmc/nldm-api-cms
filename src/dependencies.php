@@ -20,8 +20,13 @@ return function (App $app) {
         return new \App\Controller\UserController($container);
     };
 
-      // SectionController
-      $container['SectionController'] = function ($c) use ($container) {
+    // ContentController
+    $container['ContentController'] = function ($c) use ($container) {
+        return new \App\Controller\ContentController($container);
+    };
+
+    // SectionController
+    $container['SectionController'] = function ($c) use ($container) {
         return new \App\Controller\SectionController($container);
     };
 

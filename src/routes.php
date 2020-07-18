@@ -32,6 +32,10 @@ return function (App $app) {
     $app->post('/send-mail', 'MailController:send');
 
     $app->group('/cms', function () use ($app) {
+        $app->group('/content', function () use ($app) {
+            $app->post('/create', 'ContentController:create');
+        });
+
         $app->group('/section', function () use ($app) {
             $app->post('/create', 'SectionController:create');
         });
