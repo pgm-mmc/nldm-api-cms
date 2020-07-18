@@ -3,6 +3,7 @@
 namespace App\Lib;
 
 use Medoo\Medoo as DB;
+use PDO;
 
 /**
  * Class Database
@@ -15,14 +16,26 @@ class Database
 
     public function __construct($c)
     {
-        $database = $c->get('settings')['database'];
+        $config = $c->get('settings')['database'];
 
         $this->db = new DB([
-            'database_type' => $database['type'],
-            'database_name' => $database['name'],
-            'server'        => $database['server'],
-            'username'      => $database['username'],
-            'password'      => $database['password']
+            'database_type' => $config['type'],
+            'database_name' => $config['name'],
+            'server'        => $config['server'],
+            'username'      => $config['username'],
+            'password'      => $config['password'],
+
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_general_ci',
+            'port' => 3306,
+
+            'logging' => false,
+            'option' => [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ],
+            'command' => [
+                'SET SQL_MODE=ANSI_QUOTES'
+            ]
         ]);
     }
 }
