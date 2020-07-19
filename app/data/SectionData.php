@@ -25,6 +25,18 @@ class SectionData extends Database
         parent::__construct($c);
     }
 
+    public function getData(): array
+    {
+        return $this->db->select('section', [
+            'section_id',
+            'section_code',
+            'section_desc',
+            'sequence'
+        ], [
+            'ORDER' => ['sequence' => 'ASC']
+        ]);
+    }
+
     public function setData(): bool
     {
         try {

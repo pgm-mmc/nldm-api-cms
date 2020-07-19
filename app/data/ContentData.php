@@ -42,6 +42,26 @@ class ContentData extends Database
         parent::__construct($c);
     }
 
+    public function getData(): array
+    {
+        return $this->db->select('content', [
+            '[><]section' => ['section_id' => 'section_id']
+        ], [
+            'content.content_id',
+            'section.section_code',
+            'section.section_desc',
+            'content.content_title',
+            'content.content_body',
+            'content.featured_image_url',
+            'content.caption',
+            'content.button_text',
+            'content.link_url'
+        ], [
+            'content.is_active' => 1,
+            'ORDER' => ['section.sequence' => 'ASC']
+        ]);
+    }
+
     public function setData(): bool
     {
         try {

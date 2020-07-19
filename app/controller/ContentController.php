@@ -19,4 +19,11 @@ class ContentController
     {
         $this->model = new ContentData($c);
     }
+
+    public function getAll(Request $request, Response $response)
+    {
+        $data = $this->model->getData();
+
+        return $response->withJson(['status' => true, 'data' => $data]);
+    }
 }

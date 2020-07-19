@@ -21,6 +21,13 @@ class SectionController
         $this->model = new SectionData($c);
     }
 
+    public function getAll(Request $request, Response $response)
+    {
+        $data = $this->model->getData();
+
+        return $response->withJson(['status' => true, 'data' => $data]);
+    }
+
     public function create(Request $request, Response $response)
     {
         $param = $request->getQueryParams();
