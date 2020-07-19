@@ -14,7 +14,7 @@ return function (App $app) {
     $app->add(function ($req, $res, $next) {
         $response = $next($req, $res);
         return $response
-                ->withHeader('Access-Control-Allow-Origin', 'http://localhost:8082')
+                ->withHeader('Access-Control-Allow-Origin', $this->get('settings')['app']['cms_url'])
                 ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
                 ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     });
@@ -45,6 +45,8 @@ return function (App $app) {
 
     $app->group('/cms', function () use ($app) {
         $app->group('/content', function () use ($app) {
+            $app->get('/get/all', 'ContentController:getAll');
+
             $app->post('/create', 'ContentController:create');
         });
 
