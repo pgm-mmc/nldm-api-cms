@@ -44,6 +44,7 @@ class AuthController
             "nbf" => $nbf
         );
 
+        JWT::$leeway = 5;
         $jwt = JWT::encode($payload, $this->serverKey);
         //$decoded = JWT::decode($jwt, $this->auth['server_key'], array('HS256'));
 

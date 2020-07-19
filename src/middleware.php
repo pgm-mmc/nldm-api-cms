@@ -7,6 +7,7 @@ return function (App $app) {
 
     $container = $app->getContainer();
 
+    // JWT Authentication
     $app->add(new Tuupola\Middleware\JwtAuthentication([
         "ignore" => ["/auth", "/send-mail"],
         "secret" => $container->get('settings')['jwt']['server_key'],
