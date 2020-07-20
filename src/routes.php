@@ -44,6 +44,10 @@ return function (App $app) {
     $app->post('/send-mail', 'MailController:send');
 
     $app->group('/cms', function () use ($app) {
+        $app->group('/user', function () use ($app) {
+            $app->get('/get/all', 'UserController:getAll');
+        });
+
         $app->group('/content', function () use ($app) {
             $app->get('/get/all', 'ContentController:getAll');
 

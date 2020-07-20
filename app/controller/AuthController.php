@@ -41,7 +41,7 @@ class AuthController
             "iss" => $this->app['app_url'],
             "aud" => $this->app['cms_url'],
             "exp" => $exp,
-            "nbf" => $nbf
+            //"nbf" => $nbf
         );
 
         JWT::$leeway = 5;

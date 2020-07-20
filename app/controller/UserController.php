@@ -14,13 +14,13 @@ use App\Lib\Cryptography;
  */
 class UserController
 {
-    private $data;
+    private $model;
 
     private $crypt;
 
     public function __construct($c)
     {
-        $this->data = new UserData($c);
+        $this->model = new UserData($c);
         $this->crypt = new Cryptography();
     }
 
@@ -29,6 +29,13 @@ class UserController
         return $response->withJson(
             ['settings' => $this->data->login()]
         );
+    }
+
+    public function getAll(Request $request, Response $response)
+    {
+        $data = $this->model->getData();
+
+        return $response->withJson(['status' => true, 'data' => $data]);
     }
 
     public function register(Request $request, Response $response)
