@@ -9,7 +9,7 @@ return function (App $app) {
 
     // JWT Authentication
     $app->add(new Tuupola\Middleware\JwtAuthentication([
-        "ignore" => ["/auth", "/send-mail"],
+        "ignore" => ["/auth", "/send-mail", "/system-info"],
         "secret" => $container->get('settings')['jwt']['server_key'],
         "error" => function ($response, $arguments) {
             $data["status"] = "error";
