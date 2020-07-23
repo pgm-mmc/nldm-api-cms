@@ -38,9 +38,24 @@ class UserData extends Database
         parent::__construct($c);
     }
 
-    public function login(): array
+    public function login(): bool
     {
-        return ['success' => true];
+        $id = $this->db->get('users', 'id', [
+            'email' => $this->email
+        ]);
+
+        if (empty($id)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->db->get('users', 'password', [
+            'email' => $this->email
+        ]);
     }
 
     public function getData(): array

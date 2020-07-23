@@ -27,14 +27,12 @@ return function (App $app) {
         return $container->get('renderer')->render($response, 'index.phtml', $args);
     });
 
-    $app->group('/user', function () use ($app) {
-        $app->post('/register', 'UserController:register');
+    $app->group('/auth', function () use ($app) {
+        $app->post('/login', 'AuthController:login');
     });
 
-    $app->group('/auth', function () use ($app) {
-        $app->post('/login', 'UserController:login');
-
-        $app->post('/generate/token', 'AuthController:generateToken');
+    $app->group('/user', function () use ($app) {
+        $app->post('/register', 'UserController:register');
     });
 
     $app->post('/send-mail', 'MailController:send');

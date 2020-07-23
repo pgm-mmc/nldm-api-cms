@@ -5,6 +5,8 @@ namespace App\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use \Firebase\JWT\JWT;
+use App\Lib\Cryptography;
+use App\Data\UserData;
 
 /**
  * Class AuthController
@@ -21,15 +23,18 @@ class AuthController
 
     private $app;
 
+    private $model;
+
     public function __construct($c)
     {
         $this->serverKey = $c->get('settings')['jwt']['server_key'];
         $this->expire = $c->get('settings')['jwt']['expiration'];
         $this->notBefore = $c->get('settings')['jwt']['not_before'];
         $this->app = $c->get('settings')['app'];
+        $this->model = new UserData($c);
     }
 
-    public function generateToken(Request $request, Response $response)
+    private function generateToken(): array
     {
         // Set Expiration Time
         $issuedAt   = time();
@@ -48,11 +53,37 @@ class AuthController
         $jwt = JWT::encode($payload, $this->serverKey);
         //$decoded = JWT::decode($jwt, $this->auth['server_key'], array('HS256'));
 
-        return $response->withJson([
+        return [
+            'status' => true,
             'token_type' => 'Bearer',
             'access_token' => $jwt,
             'exp' => $exp,
             'expiration' => number_format($expiration, 2, '.', '')
-        ]);
+        ];
+    }
+    
+    public function login(Request $request, Response $response)
+    {
+        $param  = $request->getQueryParams();
+
+        if (isset($param['email']) && isset($param['password'])) {
+            $this->model->email = $param['email'];
+            $this->model->password = $param['password'];
+
+            $verify = $this->model->login();
+
+            if ($verify) {
+                $securePass = $this->model->getPassword();
+
+                $crypt = new Cryptography();
+
+                if ($crypt->verifyPassword($this->model->password, $securePass)) {
+                    return $response->withJson($this->generateToken());
+                }
+
+            }
+        }
+
+        return $response->withJson(['status' => false]);
     }
 }

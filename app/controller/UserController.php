@@ -24,13 +24,6 @@ class UserController
         $this->crypt = new Cryptography();
     }
 
-    public function login(Request $request, Response $response)
-    {
-        return $response->withJson(
-            ['settings' => $this->data->login()]
-        );
-    }
-
     public function getAll(Request $request, Response $response)
     {
         $data = $this->model->getData();
