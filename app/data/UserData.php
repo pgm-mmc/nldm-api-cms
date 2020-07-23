@@ -11,6 +11,28 @@ use App\Lib\Database;
  */
 class UserData extends Database
 {
+    public $id;
+
+    public $name;
+
+    public $email;
+
+    public $password;
+
+    public $displayName;
+
+    public $isAdmin;
+
+    public $rememberToken;
+
+    public $createdAt;
+
+    public $updatedAt;
+
+    public $loginCounter;
+
+    public $isLock;
+
     public function __construct($c)
     {
         parent::__construct($c);
@@ -33,8 +55,25 @@ class UserData extends Database
         ]);
     }
 
-    public function register(): array
+    public function setData(): bool
     {
+        try {
+            $this->db->pdo->beginTransaction();
 
+            $this->db->insert('users', [
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => $this->password,
+                'display_name' => $this->name,
+                'is_admin' => $this->isAdmin
+            ]);
+
+            $this->db->pdo->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->db->pdo->rollback();
+        }
+
+        return false;
     }
 }

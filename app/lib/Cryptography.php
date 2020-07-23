@@ -13,25 +13,19 @@ class Cryptography
 {
     private $bcrypt;
 
-    public $plainPass;
-
-    public $encryptedPass;
-
     public function __construct()
     {
         $this->bcrypt = new Bcrypt();
     }
 
-    public function encryptPassword(): ?string
+    public function encryptPassword($plainPass): ?string
     {
-        $this->encryptedPass = $this->bcrypt->create($this->plainPass);
-
-        return $this->encryptedPass;
+        return $this->bcrypt->create($plainPass);
     }
 
-    public function verifyPassword(): ?bool
+    public function verifyPassword($plainPass, $encryptedPass): ?bool
     {
-        if ($this->bcrypt->verify($this->plainPass, $this->encryptedPass)) {
+        if ($this->bcrypt->verify($plainPass, $encryptedPass)) {
             return true;
         }
 

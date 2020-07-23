@@ -42,30 +42,18 @@ class UserController
     {
         $param  = $request->getQueryParams();
 
-        if (isset($param['username']) && isset($param['password']))
+        if (isset($param['email']) && isset($param['password']) && isset($param['name']))
         {
-            
+            $this->model->name = $param['name'];
+            $this->model->email = $param['email'];
+            $this->model->password = $this->crypt->encryptPassword($param['password']);
+            $this->model->isAdmin = 1;
+
+            $status = $this->model->setData();
+
+            return $response->withJson(['status' => $status]);
         }
-    }
 
-    public function generatePassword(Request $request, Response $response)
-    {
-        $param  = $request->getQueryParams();
-        $this->crypt->plainPass = $param['password'];
-
-        return $response->withJson(
-            ['password' => $this->crypt->encryptPassword()]
-        );
-    }
-
-    public function verifyPassword(Request $request, Response $response)
-    {
-        $param  = $request->getQueryParams();
-        $this->crypt->plainPass     = $param['password'];
-        $this->crypt->encryptedPass = $param['encrypted_password'];
-
-        return $response->withJson(
-            ['is_valid' => $this->crypt->verifyPassword()]
-        );
+        return $response->withJson(['status' => false]);
     }
 }
