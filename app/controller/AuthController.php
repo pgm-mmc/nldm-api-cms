@@ -64,7 +64,7 @@ class AuthController
     
     public function login(Request $request, Response $response)
     {
-        $param  = $request->getQueryParams();
+        $param  = $request->getParsedBody();
 
         if (isset($param['email']) && isset($param['password'])) {
             $this->model->email = $param['email'];
@@ -84,6 +84,6 @@ class AuthController
             }
         }
 
-        return $response->withJson(['status' => false]);
+        return $response->withJson(['status' => false, 'payload' => $param]);
     }
 }
